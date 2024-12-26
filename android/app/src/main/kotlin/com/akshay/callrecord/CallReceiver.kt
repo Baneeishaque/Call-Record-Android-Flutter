@@ -24,7 +24,7 @@ class CallReceiver : BroadcastReceiver() {
         if (state == TelephonyManager.EXTRA_STATE_IDLE) {
             Log.d("hey1","EXTRA IDLE YEEEEEESSSSS")
             // Call ended
-            val recordingPath = "/storage/emulated/0/CallRecordings/"
+            val recordingPath = "/storage/self/primary/Music/Recordings/Call Recordings/"
             val mostRecentFile = getMostRecentFile(recordingPath)
             if (mostRecentFile != null) {
                 UploadService.uploadRecording(context, mostRecentFile)
