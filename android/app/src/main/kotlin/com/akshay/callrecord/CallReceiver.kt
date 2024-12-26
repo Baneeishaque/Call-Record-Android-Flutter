@@ -39,10 +39,12 @@ class CallReceiver : BroadcastReceiver() {
                 WorkManager.getInstance(context).enqueue(uploadWorkRequest)
             }else{
                 Log.d("hey2","PATH IS NULL")
+                Toast.makeText(context, "Broadcast received!, hey2 - PATH IS NULL", Toast.LENGTH_SHORT).show()
             }
         }
         else {
             Log.d("hey","EXTRA IDLE NOOOOOOOO")
+            Toast.makeText(context, "Broadcast received!, hey - EXTRA IDLE NOOOOOOOO", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -77,13 +79,16 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) : Worker(co
 
                 if (response.isSuccessful) {
                     Result.success()
+                    Toast.makeText(context, "Upload Success", Toast.LENGTH_SHORT).show()
                 } else {
                     Result.retry()
+                    Toast.makeText(context, "Upload Failure", Toast.LENGTH_SHORT).show()
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Result.retry()
+            Toast.makeText(context, "Upload Exception ${e.toString()}", Toast.LENGTH_SHORT).show()
         }
     }
 }
