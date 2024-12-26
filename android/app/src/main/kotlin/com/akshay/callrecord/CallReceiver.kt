@@ -24,10 +24,13 @@ class CallReceiver : BroadcastReceiver() {
         val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
         if (state == TelephonyManager.EXTRA_STATE_IDLE) {
             Log.d("hey1","EXTRA IDLE YEEEEEESSSSS")
+            Toast.makeText(context, "Broadcast received!, Yes TelephonyManager.EXTRA_STATE_IDLE", Toast.LENGTH_SHORT).show()
             // Call ended
             val recordingPath = "/storage/self/primary/Music/Recordings/Call Recordings/"
             val mostRecentFile = getMostRecentFile(recordingPath)
             if (mostRecentFile != null) {
+                Toast.makeText(context, "Broadcast received!, mostRecentFile ${mostRecentFile.absolutePath}", Toast.LENGTH_SHORT).show()
+
                 UploadService.uploadRecording(context, mostRecentFile)
                 val data = Data.Builder()
                     .putString("filePath", mostRecentFile.absolutePath)
@@ -45,7 +48,7 @@ class CallReceiver : BroadcastReceiver() {
         }
         else {
             Log.d("hey","EXTRA IDLE NOOOOOOOO")
-            Toast.makeText(context, "Broadcast received!, hey - EXTRA IDLE NOOOOOOOO", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Broadcast received!, No TelephonyManager.EXTRA_STATE_IDLE", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -81,16 +84,16 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) : Worker(co
                 val response = api.uploadFile(multipart)
 
                 if (response.isSuccessful) {
-                    Toast.makeText(appContext, "Upload Success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(appContext, "Broadcast received!, Upload Success", Toast.LENGTH_SHORT).show()
                     Result.success()
                 } else {
-                    Toast.makeText(appContext, "Upload Failure", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(appContext, "Broadcast received!, Upload Failure", Toast.LENGTH_SHORT).show()
                     Result.retry()
                 }
             }
         } catch (e: Exception) {
             // e.printStackTrace()
-            Toast.makeText(appContext, "Upload Exception ${e.toString()}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(appContext, "Broadcast received!, Upload Exception ${e.toString()}", Toast.LENGTH_SHORT).show()
             Result.retry()
         }
     }
