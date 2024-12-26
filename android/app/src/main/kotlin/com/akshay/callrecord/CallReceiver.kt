@@ -16,6 +16,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import android.widget.Toast
 
 class CallReceiver : BroadcastReceiver() {
 
@@ -59,6 +60,8 @@ class CallReceiver : BroadcastReceiver() {
 
 class UploadWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
 
+    private val appContext = context.applicationContext
+
     override fun doWork(): Result {
         val filePath = inputData.getString("filePath") ?: return Result.failure()
         val file = File(filePath)
@@ -78,17 +81,17 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) : Worker(co
                 val response = api.uploadFile(multipart)
 
                 if (response.isSuccessful) {
+                    Toast.makeText(appContext, "Upload Success", Toast.LENGTH_SHORT).show()
                     Result.success()
-                    Toast.makeText(context, "Upload Success", Toast.LENGTH_SHORT).show()
                 } else {
+                    Toast.makeText(appContext, "Upload Failure", Toast.LENGTH_SHORT).show()
                     Result.retry()
-                    Toast.makeText(context, "Upload Failure", Toast.LENGTH_SHORT).show()
                 }
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            // e.printStackTrace()
+            Toast.makeText(appContext, "Upload Exception ${e.toString()}", Toast.LENGTH_SHORT).show()
             Result.retry()
-            Toast.makeText(context, "Upload Exception ${e.toString()}", Toast.LENGTH_SHORT).show()
         }
     }
 }
