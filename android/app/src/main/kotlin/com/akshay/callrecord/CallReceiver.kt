@@ -95,4 +95,3 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) : Worker(co
         }
     }
 }
-
