@@ -18,18 +18,28 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import android.widget.Toast
 
+val tag = "Call-Record-Android-Flutter"
+var message = ""
+
 class CallReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        
         val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
         if (state == TelephonyManager.EXTRA_STATE_IDLE) {
-            Log.d("hey1","EXTRA IDLE YEEEEEESSSSS")
-            Toast.makeText(context, "Broadcast received!, Yes TelephonyManager.EXTRA_STATE_IDLE", Toast.LENGTH_SHORT).show()
+
+            message = "Broadcast received!, Yes TelephonyManager.EXTRA_STATE_IDLE"
+            Log.d(tag, message)
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
             // Call ended
             val recordingPath = "/storage/self/primary/Music/Recordings/Call Recordings/"
             val mostRecentFile = getMostRecentFile(recordingPath)
             if (mostRecentFile != null) {
-                Toast.makeText(context, "Broadcast received!, mostRecentFile ${mostRecentFile.absolutePath}", Toast.LENGTH_SHORT).show()
+
+                message = "Broadcast received!, mostRecentFile ${mostRecentFile.absolutePath}"
+                Log.d(tag, message)
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
                 UploadService.uploadRecording(context, mostRecentFile)
                 val data = Data.Builder()
@@ -41,14 +51,19 @@ class CallReceiver : BroadcastReceiver() {
                     .build()
 
                 WorkManager.getInstance(context).enqueue(uploadWorkRequest)
+
             }else{
-                Log.d("hey2","PATH IS NULL")
-                Toast.makeText(context, "Broadcast received!, hey2 - PATH IS NULL", Toast.LENGTH_SHORT).show()
+
+                message = "Broadcast received!, PATH IS NULL"
+                Log.d(tag, message)
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             }
         }
         else {
-            Log.d("hey","EXTRA IDLE NOOOOOOOO")
-            Toast.makeText(context, "Broadcast received!, No TelephonyManager.EXTRA_STATE_IDLE", Toast.LENGTH_SHORT).show()
+
+            message = "Broadcast received!, No TelephonyManager.EXTRA_STATE_IDLE"
+            Log.d(tag, message)
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -84,16 +99,27 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) : Worker(co
                 val response = api.uploadFile(multipart)
 
                 if (response.isSuccessful) {
-                    Toast.makeText(appContext, "Broadcast received!, Upload Success", Toast.LENGTH_SHORT).show()
+                    
+                    message = "Broadcast received!, Upload Success"
+                    Log.d(tag, message)
+                    Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
+                    
                     Result.success()
+
                 } else {
-                    Toast.makeText(appContext, "Broadcast received!, Upload Failure", Toast.LENGTH_SHORT).show()
+                    
+                    message = "Broadcast received!, Upload Failure"
+                    Log.d(tag, message)
+                    Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
+                    
                     Result.retry()
                 }
             }
         } catch (e: Exception) {
-            // e.printStackTrace()
-            Toast.makeText(appContext, "Broadcast received!, Upload Exception ${e.toString()}", Toast.LENGTH_SHORT).show()
+
+            message = "Broadcast received!, Upload Exception ${e.toString()}"
+            Log.d(tag, message)
+            Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
             Result.retry()
         }
     }
