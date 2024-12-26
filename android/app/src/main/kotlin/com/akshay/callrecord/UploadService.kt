@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 object UploadService {
 
-    private const val BASE_URL = "https://yourserver.com/api/"
+    private const val BASE_URL = "https://3000-baneeishaqu-gitpodfullv-8rxwlxj9vof.ws-us117.gitpod.io/"
 
     interface ApiService {
         @Multipart

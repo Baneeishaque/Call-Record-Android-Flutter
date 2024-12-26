@@ -73,7 +73,7 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) : Worker(co
             // Use runBlocking to call the suspend function
             runBlocking {
                 val retrofit = Retrofit.Builder()
-                    .baseUrl("https://yourserver.com/api/")
+                    .baseUrl("https://3000-baneeishaqu-gitpodfullv-8rxwlxj9vof.ws-us117.gitpod.io/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
 
