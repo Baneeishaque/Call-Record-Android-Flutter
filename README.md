@@ -85,8 +85,12 @@ gh auth login
 #### Add Topics Using GitHub CLI
 
 ```bash
-# Add all recommended topics at once
-gh repo edit Baneeishaque/Call-Record-Android-Flutter --add-topic flutter,dart,android,kotlin,call-recorder,call-recording,audio-recording,material-design,retrofit,okhttp,workmanager,coroutines,mobile-app,android-app,flutter-app,telephony
+# Add all recommended topics at once (using line continuation for readability)
+gh repo edit Baneeishaque/Call-Record-Android-Flutter \
+  --add-topic flutter,dart,android,kotlin \
+  --add-topic call-recorder,call-recording,audio-recording \
+  --add-topic material-design,retrofit,okhttp,workmanager \
+  --add-topic coroutines,mobile-app,android-app,flutter-app,telephony
 
 # Or add topics individually
 gh repo edit --add-topic flutter
@@ -249,10 +253,14 @@ updateTopics();
 
 ## Quick Start Command
 
-Copy and run this single command to add all recommended topics:
+Copy and run this command to add all recommended topics:
 
 ```bash
-gh repo edit Baneeishaque/Call-Record-Android-Flutter --add-topic flutter,dart,android,kotlin,call-recorder,call-recording,audio-recording,material-design,retrofit,okhttp,workmanager,coroutines,mobile-app,android-app,flutter-app,telephony
+gh repo edit Baneeishaque/Call-Record-Android-Flutter \
+  --add-topic flutter,dart,android,kotlin \
+  --add-topic call-recorder,call-recording,audio-recording \
+  --add-topic material-design,retrofit,okhttp,workmanager \
+  --add-topic coroutines,mobile-app,android-app,flutter-app,telephony
 ```
 
 ## Getting Started with Development
